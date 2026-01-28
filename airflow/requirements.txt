@@ -1,0 +1,2 @@
+soda-core-postgres == 3.5.6
+pytest == 9.0.2
