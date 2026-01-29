@@ -1,0 +1,3 @@
+Which shipping modes are more likely to result in late deliveries?
+How frequently do shipping delays occur, and what do their patterns tell us about operational consistency?
+Are there specific regions or time periods where shipping delays are more common?
