@@ -1,2 +1,6 @@
 soda-core-postgres == 3.5.6
 pytest == 9.0.2
+apache-airflow-providers-openlineage
+astronomer-cosmos
+boto3
+pydantic==2.8.2
