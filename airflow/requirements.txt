@@ -3,4 +3,10 @@ pytest == 9.0.2
 apache-airflow-providers-openlineage
 astronomer-cosmos
 boto3
-pydantic==2.8.2
+pydantic
+apache-airflow-providers-amazon
+apache-airflow-providers-slack
+pandas
+deltalake[aws]
+s3fs
+pyarrow
