@@ -1,6 +1,8 @@
 # 📦 Supply Chain and Ecommerce Orderfulment Pipeline
 
-##  Problem Definition
+---
+
+## Problem Definition
 
 Supply Chain and Ecommerce operations generate large volumes of data from multiple systems, including orders, shipments, warehouse operations, delivery times and customer feedback.
 
@@ -14,17 +16,18 @@ However, this data is often fragmented, inconsistent and stored in different for
 
 Without an integrated data pipeline and structured analytical model, transforming raw logistics data into reliable, decision-ready insights is challenging.
 
-### Stakerholder Objectives
-* Sales Performance: Monitor and improve overall sales across products and regions.
-* Profitability: Analyze profit margins to maximize business profitability.
-* Customer Insights: Understand customer behavior to improve targeting and retention.
-* Logistics Efficiency: Reduce late deliveries and improve shipping performance.
-* Regional Analysis: Identify high-performing and underperforming sales regions.
-* Product Performance: Evaluate product demand to optimize product offerings.
-* Discount Strategy: Assess the impact of discounts on sales and profit.
 
+## Stakerholder Objectives
+---
+* **Sales Performance:** Monitor and improve overall sales across products and regions.
+* **Profitability:** Analyze profit margins to maximize business profitability.
+* **Customer Insights:** Understand customer behavior to improve targeting and retention.
+* **Logistics Efficiency:** Reduce late deliveries and improve shipping performance.
+* **Regional Analysis:** Identify high-performing and underperforming sales regions.
+* **Product Performance:** Evaluate product demand to optimize product offerings.
+* **Discount Strategy:** Assess the impact of discounts on sales and profit.
 
-## ✅ Solution
+# ✅ Solution
 ---
 
 This project implements a **cloud-based data pipeline** and builds an **OLAP-ready data warehouse** to enable efficient logistics analytics.
@@ -40,24 +43,55 @@ The solution:
 The result is a scalable analytical system that improves visibility, performance monitoring, and strategic decision-making in e-commerce logistics.
 
 
-## Architecture Diagram
+
+# Architecture Diagram
 ---
+
 ![AWS architecture](documentation/data/architecture.png)
 
-## 🛠️ Tech Stack
----
-![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat&logo=apache-airflow\&logoColor=white)![Docker](https://img.shields.io/badge/Docker-2496ED?style=style=flat&logo=docker\&logoColor=white)![Python](https://img.shields.io/badge/Python-3776AB?style=style=flat&logo=python\&logoColor=white)![SQL](https://img.shields.io/badge/SQL-025E8C?style=style=flat&logo=postgresql\&logoColor=white)![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=style=flat&logo=amazon-s3\&logoColor=white)![Amazon Redshift](https://img.shields.io/badge/Amazon%20Redshift-8C4FFF?style=style=flat&logo=amazon-redshift\&logoColor=white)![AWS Glue](https://img.shields.io/badge/AWS%20Glue-FF9900?style=style=flat&logo=amazonaws\&logoColor=white)![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=style=flat&logo=prometheus\&logoColor=white)![Grafana](https://img.shields.io/badge/Grafana-F46800?style=style=flat&logo=grafana\&logoColor=white)![Loki](https://img.shields.io/badge/Grafana%20Loki-F46800?style=style=flat&logo=grafana\&logoColor=white)![Tempo](https://img.shields.io/badge/Grafana%20Tempo-F46800?style=style=flat&logo=grafana\&logoColor=white)![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-000000?style=style=flat&logo=opentelemetry\&logoColor=white)![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=style=flat&logo=pytest\&logoColor=white)![Linting](https://img.shields.io/badge/Linting-Flake8-4B8BBE?style=for-the-badge)![GitHub](https://img.shields.io/badge/GitHub-181717?style=style=flat&logo=github)![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=style=flat&logo=github-actions)![Linux](https://img.shields.io/badge/Linux-FCC624?style=style=flat&logo=linux\&logoColor=black)![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat&logo=power-bi\&logoColor=black)
 
-## Data Warehouse Overview
+
+# 🛠️ Tech Stack
 ---
-The analytics schema in Redshift employs a star‑schema  centered on one fact table that capture both granular line‑level delivery performance  and higher‑level order‑metrics and surrounded by four conformed dimensions (orders, customers, products and dates). This design lets you slice & dice daily service outcomes across the `who` (customer and city), `what` (product and category), `when` (order, agreed‑delivery and actual‑delivery dates) and `where` (customer geography), all in sub‑second, ad‑hoc queries.
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=style=flat\&logo=docker\&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=style=flat\&logo=python\&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-025E8C?style=style=flat\&logo=postgresql\&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=style=flat\&logo=amazon-s3\&logoColor=white)
+![Amazon Redshift](https://img.shields.io/badge/Amazon%20Redshift-8C4FFF?style=style=flat\&logo=amazon-redshift\&logoColor=white)
+![AWS Glue](https://img.shields.io/badge/AWS%20Glue-FF9900?style=style=flat\&logo=amazonaws\&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=style=flat\&logo=prometheus\&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=style=flat\&logo=grafana\&logoColor=white)
+![Loki](https://img.shields.io/badge/Grafana%20Loki-F46800?style=style=flat\&logo=grafana\&logoColor=white)
+![Tempo](https://img.shields.io/badge/Grafana%20Tempo-F46800?style=style=flat\&logo=grafana\&logoColor=white)
+![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-000000?style=style=flat\&logo=opentelemetry\&logoColor=white)
+![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=style=flat\&logo=pytest\&logoColor=white)
+![Linting](https://img.shields.io/badge/Linting-Flake8-4B8BBE?style=for-the-badge)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=style=flat\&logo=github)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=style=flat\&logo=github-actions)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=style=flat\&logo=linux\&logoColor=black)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat\&logo=power-bi\&logoColor=black)
+
+# Data Warehouse Overview
+---
+The analytics schema in Redshift employs a star-schema centered on one fact table that capture both granular line-level delivery performance and higher-level order-metrics and surrounded by four conformed dimensions (orders, customers, products and dates).
+
+This design lets you slice & dice daily service outcomes across the:
+
+* `who` (customer and city)
+* `what` (product and category)
+* `when` (order, agreed-delivery and actual-delivery dates)
+* `where` (customer geography)
+
+All in **sub-second, ad-hoc queries**.
 
 ![Supply Chain dashboard](data/star_schema.png)
 
-## Technology Choices
----
+
 
 # Technology Choices
+
+---
 
 # 1. Data Storage – Amazon S3 Data Lake
 
@@ -65,13 +99,31 @@ The analytics schema in Redshift employs a star‑schema  centered on one fact t
 
 Instead of multiple buckets, a **single S3 bucket was used with a layered folder structure** following the **Bronze–Silver–Gold data lake architecture**:
 
-* **Bronze Layer** – Stores raw data exactly as ingested from the source system. No transformations are applied at this stage to preserve the original dataset.
-* **Silver Layer** – Contains cleaned and standardized datasets after basic transformations such as data type corrections, handling missing values and schema alignment.
-* **Gold Layer** – Stores curated and analytics-ready datasets that are optimized for reporting, dashboards and downstream consumption.
+### Bronze Layer
 
-This layered structure helps maintain **data lineage, improves data quality management and clearly separates raw data from transformed and business-ready datasets**.
+Stores raw data exactly as ingested from the source system. No transformations are applied at this stage to preserve the original dataset.
+
+### Silver Layer
+
+Contains cleaned and standardized datasets after basic transformations such as:
+
+* data type corrections
+* handling missing values
+* schema alignment
+
+### Gold Layer
+
+Stores curated and analytics-ready datasets that are optimized for reporting, dashboards and downstream consumption.
+
+This layered structure helps maintain:
+
+* **data lineage**
+* **data quality management**
+* clear separation between raw data and business-ready datasets.
 
 In addition, a **separate S3 bucket was created for testing and development purposes**, allowing experimentation and validation of ETL processes without affecting production data.
+
+
 
 # 2. Data Processing & ETL – Python, Pandas, PyArrow, Delta-rs
 
@@ -94,6 +146,8 @@ The implementation relies on several Python libraries:
 
 Using Python with these libraries allows efficient processing of datasets while maintaining compatibility with modern **data lake table formats**.
 
+
+
 # 3. Data Warehousing – Amazon Redshift
 
 **Amazon Redshift** was used as the analytical data warehouse.
@@ -102,20 +156,22 @@ Data from the **processed S3 layer** is loaded into Redshift where it is structu
 
 The warehouse includes:
 
-* **Fact Table**
+### Fact Table
 
-  * Fact_Sales
+* `Fact_Sales`
 
-* **Dimension Tables**
+### Dimension Tables
 
-  * Dim_Customer
-  * Dim_Product
-  * Dim_Category
-  * Dim_Location
-  * Dim_Time
-  * Dim_Shipping
+* `Dim_Customer`
+* `Dim_Product`
+* `Dim_Category`
+* `Dim_Location`
+* `Dim_Time`
+* `Dim_Shipping`
 
 This schema enables **fast analytical queries, aggregations, and reporting** for business intelligence.
+
+
 
 # 4. Data Modeling – SQL
 
@@ -130,22 +186,22 @@ Using SQL for transformations allowed the project to:
 
 SQL was used to create the following warehouse models:
 
-* **Dimension Tables**
+### Dimension Tables
 
-  * `dim_customer`
-  * `dim_product`
-  * `dim_date`
-  * `dim_order`
-  * `dim_shipping`
-  * `dim_delivery`
+* `dim_customer`
+* `dim_product`
+* `dim_date`
+* `dim_order`
+* `dim_shipping`
+* `dim_delivery`
 
-* **Fact Table**
+### Fact Table
 
-  * `fact_sales`
+* `fact_sales`
 
-These SQL transformations convert the **Silver layer datasets** into a **Gold layer star schema** optimized for analytical queries and business intelligence tools such as Power BI.
+These SQL transformations convert the **Silver layer datasets** into a **Gold layer star schema** optimized for analytical queries and business intelligence tools such as **Power BI**.
 
----
+
 
 # 5. Workflow Orchestration – Apache Airflow
 
@@ -160,9 +216,11 @@ Airflow schedules and manages the workflow using **DAGs (Directed Acyclic Graphs
 
 Airflow ensures tasks run in the correct order and provides monitoring for pipeline execution.
 
+
+
 # 6. Business Intelligence & Visualization
 
-A **dashboarding tool (Power BI )** was used to visualize insights from the Redshift warehouse.
+A **dashboarding tool (Power BI)** was used to visualize insights from the Redshift warehouse.
 
 The dashboard presents key business metrics including:
 
@@ -174,6 +232,8 @@ The dashboard presents key business metrics including:
 * Delivery Performance
 
 This allows stakeholders to monitor **sales trends, profitability, logistics performance, and customer insights in one unified dashboard.**
+
+
 
 # 7. Version Control & Collaboration – GitHub
 
@@ -193,45 +253,57 @@ Using Git enables:
 * Code review
 * Reproducible pipelines
 
+
+
 # 8. Monitoring & Logging
 
 Monitoring mechanisms were implemented to ensure pipeline reliability.
 
 * **Airflow logs** track task execution and failures.
 * Alerts can be configured to notify teams if pipeline steps fail.
-* This ensures quick troubleshooting and reliable data processing.
 
-**GitHub Actions**
+This ensures quick troubleshooting and reliable data processing.
 
- * Orchestrates the above steps, then stages scripts to S3 for Glue to pick up.
+
+
+## GitHub Actions
+
+Orchestrates the above steps, then stages scripts to S3 for Glue to pick up.
 
 ![github actions img](data/github_actions.png)
 
 ![github actions img](data/github_actions_2.png)
 
-**10. Monitoring & Alerting**
-
- * Prometheus scrapes Airflow , with Grafana dashboards visualizing system health.
-  
-  **Airflow dag Dashboard**
-  ![grafana img](data/grafana_1.png)
-
-  **Airflow cluster dashboard**
-
-  ![grafana img](data/grafana_2.png)
-
-  **Operational management**
-
-   ![grafana img](data/grafana_3.png)
 
 
-Future Improvements
+## 10. Monitoring & Alerting
+
+Prometheus scrapes Airflow, with Grafana dashboards visualizing system health.
+
+### Airflow dag Dashboard
+
+![grafana img](data/grafana_1.png)
+
+### Airflow cluster dashboard
+
+![grafana img](data/grafana_2.png)
+
+### Operational management
+
+![grafana img](data/grafana_3.png)
+
+
+
+# Future Improvements
+
 ---
+
 While the current pipeline is functional and production-ready, several improvements can further enhance scalability, maintainability and governance.
 
-# Areas for Future Improvement
+## Areas for Future Improvement
 
 Several enhancements can further strengthen the platform:
+
 * 🔄 dbt for Transformations
 * Implement **data quality validation frameworks**
 * Implement **Infrastructure as Code (Terraform)**
@@ -239,4 +311,4 @@ Several enhancements can further strengthen the platform:
 * Introduce **cost monitoring for cloud resources**
 * Implement **data security and access control policies**
 
----
+
