@@ -1,8 +1,8 @@
-# 📦 E-Commerce Logistics Data Pipeline & OLAP System
+# 📦 Supply Chain and Ecommerce Orderfulment Pipeline
 
-## 🚨 Problem
+##  Problem Definition
 
-E-commerce logistics operations generate large volumes of data from multiple systems, including orders, shipments, warehouse operations, delivery times and customer feedback.
+Supply Chain and Ecommerce operations generate large volumes of data from multiple systems, including orders, shipments, warehouse operations, delivery times and customer feedback.
 
 However, this data is often fragmented, inconsistent and stored in different formats. As a result:
 
@@ -14,17 +14,18 @@ However, this data is often fragmented, inconsistent and stored in different for
 
 Without an integrated data pipeline and structured analytical model, transforming raw logistics data into reliable, decision-ready insights is challenging.
 
-###Stakerholder Objectives
-*Sales Performance: Monitor and improve overall sales across products and regions.
-*Profitability: Analyze profit margins to maximize business profitability.
-*Customer Insights: Understand customer behavior to improve targeting and retention.
-*Logistics Efficiency: Reduce late deliveries and improve shipping performance.
-*Regional Analysis: Identify high-performing and underperforming sales regions.
-*Product Performance: Evaluate product demand to optimize product offerings.
-*Discount Strategy: Assess the impact of discounts on sales and profit.
----
+### Stakerholder Objectives
+* Sales Performance: Monitor and improve overall sales across products and regions.
+* Profitability: Analyze profit margins to maximize business profitability.
+* Customer Insights: Understand customer behavior to improve targeting and retention.
+* Logistics Efficiency: Reduce late deliveries and improve shipping performance.
+* Regional Analysis: Identify high-performing and underperforming sales regions.
+* Product Performance: Evaluate product demand to optimize product offerings.
+* Discount Strategy: Assess the impact of discounts on sales and profit.
+
 
 ## ✅ Solution
+---
 
 This project implements a **cloud-based data pipeline** and builds an **OLAP-ready data warehouse** to enable efficient logistics analytics.
 
@@ -38,68 +39,25 @@ The solution:
 
 The result is a scalable analytical system that improves visibility, performance monitoring, and strategic decision-making in e-commerce logistics.
 
----
+
 ## Architecture Diagram
+---
 ![AWS architecture](documentation/data/architecture.png)
 
 ## 🛠️ Tech Stack
-![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge\&logo=apache-airflow\&logoColor=white)![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge\&logo=docker\&logoColor=white)![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge\&logo=python\&logoColor=white)![SQL](https://img.shields.io/badge/SQL-025E8C?style=for-the-badge\&logo=postgresql\&logoColor=white)![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge\&logo=amazon-s3\&logoColor=white)![Amazon Redshift](https://img.shields.io/badge/Amazon%20Redshift-8C4FFF?style=for-the-badge\&logo=amazon-redshift\&logoColor=white)![AWS Glue](https://img.shields.io/badge/AWS%20Glue-FF9900?style=for-the-badge\&logo=amazonaws\&logoColor=white)![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge\&logo=prometheus\&logoColor=white)![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge\&logo=grafana\&logoColor=white)![Loki](https://img.shields.io/badge/Grafana%20Loki-F46800?style=for-the-badge\&logo=grafana\&logoColor=white)![Tempo](https://img.shields.io/badge/Grafana%20Tempo-F46800?style=for-the-badge\&logo=grafana\&logoColor=white)![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-000000?style=for-the-badge\&logo=opentelemetry\&logoColor=white)![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge\&logo=pytest\&logoColor=white)![Linting](https://img.shields.io/badge/Linting-Flake8-4B8BBE?style=for-the-badge)![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge\&logo=github)![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge\&logo=github-actions)![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge\&logo=linux\&logoColor=black)![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge\&logo=power-bi\&logoColor=black)
+---
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat&logo=apache-airflow\&logoColor=white)![Docker](https://img.shields.io/badge/Docker-2496ED?style=style=flat&logo=docker\&logoColor=white)![Python](https://img.shields.io/badge/Python-3776AB?style=style=flat&logo=python\&logoColor=white)![SQL](https://img.shields.io/badge/SQL-025E8C?style=style=flat&logo=postgresql\&logoColor=white)![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=style=flat&logo=amazon-s3\&logoColor=white)![Amazon Redshift](https://img.shields.io/badge/Amazon%20Redshift-8C4FFF?style=style=flat&logo=amazon-redshift\&logoColor=white)![AWS Glue](https://img.shields.io/badge/AWS%20Glue-FF9900?style=style=flat&logo=amazonaws\&logoColor=white)![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=style=flat&logo=prometheus\&logoColor=white)![Grafana](https://img.shields.io/badge/Grafana-F46800?style=style=flat&logo=grafana\&logoColor=white)![Loki](https://img.shields.io/badge/Grafana%20Loki-F46800?style=style=flat&logo=grafana\&logoColor=white)![Tempo](https://img.shields.io/badge/Grafana%20Tempo-F46800?style=style=flat&logo=grafana\&logoColor=white)![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-000000?style=style=flat&logo=opentelemetry\&logoColor=white)![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=style=flat&logo=pytest\&logoColor=white)![Linting](https://img.shields.io/badge/Linting-Flake8-4B8BBE?style=for-the-badge)![GitHub](https://img.shields.io/badge/GitHub-181717?style=style=flat&logo=github)![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=style=flat&logo=github-actions)![Linux](https://img.shields.io/badge/Linux-FCC624?style=style=flat&logo=linux\&logoColor=black)![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat&logo=power-bi\&logoColor=black)
 
 ## Data Warehouse Overview
-
+---
 The analytics schema in Redshift employs a star‑schema  centered on one fact table that capture both granular line‑level delivery performance  and higher‑level order‑metrics and surrounded by four conformed dimensions (orders, customers, products and dates). This design lets you slice & dice daily service outcomes across the `who` (customer and city), `what` (product and category), `when` (order, agreed‑delivery and actual‑delivery dates) and `where` (customer geography), all in sub‑second, ad‑hoc queries.
 
 ![Supply Chain dashboard](data/star_schema.png)
 
 ## Technology Choices
-
-Below is a **similar structured “Technology Choices” section** adapted to the **data stack from your dataset and star-schema analytics project** (S3 → Glue → Redshift → dbt → Airflow → Dashboard). You can use it directly in a **project report or GitHub README**.
-
 ---
 
 # Technology Choices
-
-## 1. Data Storage – Amazon S3 Data Lake
-
-**Amazon S3** was used as the primary storage layer for the project.
-
-A **multi-bucket architecture** was implemented to organize data efficiently:
-
-* **Raw Data Bucket** – Stores the original dataset exactly as received.
-* **Processed Data Bucket** – Stores cleaned and transformed datasets.
-* **Analytics Bucket** – Stores curated data prepared for analytics and reporting.
-
-This layered structure helps maintain **data lineage, data quality and clear separation between raw and transformed data**, while also enabling scalable storage for large datasets.
-
----
-
-# 2. Data Processing & ETL – Python,Pandas,Numpy,Delta-rs
-
-**Python** was used to perform ETL (Extract, Transform, Load) operations.
-
-python(pandas) reads raw data from the **S3 Raw bucket**, performs transformations such as:
-
-* Data cleaning
-* Data type conversions
-* Handling missing values
-* Data enrichment
-
-The transformed data is then written to the **Processed S3 bucket**.
-
-Using python provides several advantages:
-
-* Serverless Spark environment
-* Automatic schema discovery
-* Tight integration with the AWS ecosystem
-* Ability to process large datasets efficiently.
-
----
-
-It looks like you’re documenting your **data architecture / ETL section**, but the text currently **doesn’t match what you actually built**. I’ll rewrite it so it **accurately reflects your real setup** (single bucket with bronze/silver/gold + Python with pandas, pyarrow, delta-rs).
-
-Here is a **clean, professional version** you can use in a report, portfolio, or documentation.
-
----
 
 # 1. Data Storage – Amazon S3 Data Lake
 
@@ -114,8 +72,6 @@ Instead of multiple buckets, a **single S3 bucket was used with a layered folder
 This layered structure helps maintain **data lineage, improves data quality management and clearly separates raw data from transformed and business-ready datasets**.
 
 In addition, a **separate S3 bucket was created for testing and development purposes**, allowing experimentation and validation of ETL processes without affecting production data.
-
----
 
 # 2. Data Processing & ETL – Python, Pandas, PyArrow, Delta-rs
 
@@ -137,8 +93,6 @@ The implementation relies on several Python libraries:
 * **Delta-rs** – for managing Delta Lake tables and enabling reliable data versioning and ACID-compliant writes
 
 Using Python with these libraries allows efficient processing of datasets while maintaining compatibility with modern **data lake table formats**.
-
----
 
 # 3. Data Warehousing – Amazon Redshift
 
@@ -162,8 +116,6 @@ The warehouse includes:
   * Dim_Shipping
 
 This schema enables **fast analytical queries, aggregations, and reporting** for business intelligence.
-
----
 
 # 4. Data Modeling – SQL
 
@@ -208,8 +160,6 @@ Airflow schedules and manages the workflow using **DAGs (Directed Acyclic Graphs
 
 Airflow ensures tasks run in the correct order and provides monitoring for pipeline execution.
 
----
-
 # 6. Business Intelligence & Visualization
 
 A **dashboarding tool (Power BI )** was used to visualize insights from the Redshift warehouse.
@@ -224,8 +174,6 @@ The dashboard presents key business metrics including:
 * Delivery Performance
 
 This allows stakeholders to monitor **sales trends, profitability, logistics performance, and customer insights in one unified dashboard.**
-
----
 
 # 7. Version Control & Collaboration – GitHub
 
@@ -245,8 +193,6 @@ Using Git enables:
 * Code review
 * Reproducible pipelines
 
----
-
 # 8. Monitoring & Logging
 
 Monitoring mechanisms were implemented to ensure pipeline reliability.
@@ -255,7 +201,6 @@ Monitoring mechanisms were implemented to ensure pipeline reliability.
 * Alerts can be configured to notify teams if pipeline steps fail.
 * This ensures quick troubleshooting and reliable data processing.
 
----
 **GitHub Actions**
 
  * Orchestrates the above steps, then stages scripts to S3 for Glue to pick up.
@@ -281,7 +226,7 @@ Monitoring mechanisms were implemented to ensure pipeline reliability.
 
 
 Future Improvements
-
+---
 While the current pipeline is functional and production-ready, several improvements can further enhance scalability, maintainability and governance.
 
 # Areas for Future Improvement
