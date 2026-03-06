@@ -1,0 +1,9 @@
+data_source aws_datasource_redshift:
+  type: redshift
+  host:  ecommerce-order-fulfillment.121774053327.eu-north-1.redshift-serverless.amazonaws.com
+  username: admin
+  password: Ijustluvher05
+  database: dev
+  schema: gold
+  region: eu-north-1
+  sslmode: require

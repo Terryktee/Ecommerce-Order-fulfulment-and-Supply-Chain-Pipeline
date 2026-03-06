@@ -1,0 +1,5 @@
+checks for dim_customer:
+  - row_count > 0 
+  - missing_count(customer_id) = 0
+  - missing_count(customer_key) = 0
+  - duplicate_count(customer_id) = 0

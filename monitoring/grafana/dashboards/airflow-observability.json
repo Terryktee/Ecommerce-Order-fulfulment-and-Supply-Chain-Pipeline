@@ -1,0 +1,230 @@
+{
+    "uid": "airflow-otel-prod",
+    "title": "Airflow (Otel-native) – Production Observability",
+    "timezone": "browser",
+    "schemaVersion": 39,
+    "version": 1,
+    "refresh": "30s",
+    "tags": ["airflow", "opentelemetry", "otel", "production"],
+    "templating": {
+      "list": [
+        {
+          "name": "dag_id",
+          "type": "query",
+          "datasource": "Prometheus",
+          "query": "label_values(airflow_dagrun_duration_success, dag_id)",
+          "multi": true,
+          "includeAll": true,
+          "allValue": ".*",
+          "refresh": 2
+        },
+        {
+          "name": "run_type",
+          "type": "query",
+          "datasource": "Prometheus",
+          "query": "label_values(airflow_dagrun_duration_success, run_type)",
+          "multi": true,
+          "includeAll": true,
+          "allValue": ".*",
+          "refresh": 2
+        }
+      ]
+    },
+    "panels": [
+      {
+        "type": "row",
+        "title": "Airflow Health Overview",
+        "collapsed": false,
+        "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 }
+      },
+      {
+        "type": "stat",
+        "title": "Scheduler Heartbeats / min",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "rate(airflow_scheduler_heartbeat_total[5m]) * 60",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 1, "w": 6, "h": 4 }
+      },
+      {
+        "type": "stat",
+        "title": "Executable Tasks",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_scheduler_tasks_executable",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 6, "y": 1, "w": 6, "h": 4 }
+      },
+      {
+        "type": "stat",
+        "title": "Starving Tasks",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_scheduler_tasks_starving",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 12, "y": 1, "w": 6, "h": 4 }
+      },
+      {
+        "type": "stat",
+        "title": "Orphaned Assets",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_asset_orphaned",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 18, "y": 1, "w": 6, "h": 4 }
+      },
+  
+      {
+        "type": "row",
+        "title": "Scheduler Performance",
+        "collapsed": false,
+        "gridPos": { "x": 0, "y": 5, "w": 24, "h": 1 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Scheduler Loop Duration (avg)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "avg(airflow_scheduler_scheduler_loop_duration)",
+            "refId": "A"
+          }
+        ],
+        "unit": "s",
+        "gridPos": { "x": 0, "y": 6, "w": 12, "h": 6 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Critical Section Duration (avg)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "avg(airflow_scheduler_critical_section_duration)",
+            "refId": "A"
+          }
+        ],
+        "unit": "s",
+        "gridPos": { "x": 12, "y": 6, "w": 12, "h": 6 }
+      },
+  
+      {
+        "type": "row",
+        "title": "DAG Run Latency & Scheduling",
+        "collapsed": false,
+        "gridPos": { "x": 0, "y": 12, "w": 24, "h": 1 }
+      },
+      {
+        "type": "timeseries",
+        "title": "DAG Run Duration (avg)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "avg by (dag_id) (airflow_dagrun_duration_success{dag_id=~\"$dag_id\", run_type=~\"$run_type\"})",
+            "refId": "A"
+          }
+        ],
+        "unit": "s",
+        "gridPos": { "x": 0, "y": 13, "w": 12, "h": 7 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Schedule Delay (avg)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "avg by (dag_id) (airflow_dagrun_schedule_delay{dag_id=~\"$dag_id\", run_type=~\"$run_type\"})",
+            "refId": "A"
+          }
+        ],
+        "unit": "s",
+        "gridPos": { "x": 12, "y": 13, "w": 12, "h": 7 }
+      },
+  
+      {
+        "type": "row",
+        "title": "Tasks & Executors",
+        "collapsed": false,
+        "gridPos": { "x": 0, "y": 20, "w": 24, "h": 1 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Running Task Instances",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_ti_running",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 21, "w": 8, "h": 6 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Executor Running Tasks",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_executor_running_tasks",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 8, "y": 21, "w": 8, "h": 6 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Executor Queued Tasks",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_executor_queued_tasks",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 16, "y": 21, "w": 8, "h": 6 }
+      },
+  
+      {
+        "type": "row",
+        "title": "Pools & Capacity",
+        "collapsed": false,
+        "gridPos": { "x": 0, "y": 27, "w": 24, "h": 1 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Pool Running Slots",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_pool_running_slots",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 28, "w": 12, "h": 6 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Pool Starving Tasks",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "airflow_pool_starving_tasks",
+            "refId": "A"
+          }
+        ],
+        "gridPos": { "x": 12, "y": 28, "w": 12, "h": 6 }
+      }
+    ]
+  }
+  

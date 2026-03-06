@@ -78,6 +78,23 @@ x-airflow-common:
     # The following line can be used to set a custom config file, stored in the local config folder
     AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
 
+    # --- OPENTELEMETRY OBSERVABILITY SETTINGS ---
+    # Metrics (Prometheus)
+    AIRFLOW__METRICS__OTEL_ON: 'true'
+    AIRFLOW__METRICS__OTEL_HOST: 'otel-collector'
+    AIRFLOW__METRICS__OTEL_PORT: 4318
+    
+    # Tracing (Tempo)
+    AIRFLOW__TRACES__OTEL_ON: 'true'
+    AIRFLOW__TRACES__OTEL_HOST: 'otel-collector'
+    AIRFLOW__TRACES__OTEL_PORT: 4318
+    
+    # Logs (Loki) - Native Airflow 3.x OTLP Logging
+    AIRFLOW__LOGGING__OTEL_LOGGING_ON: 'true'
+    AIRFLOW__LOGGING__OTEL_HOST: 'otel-collector'
+    AIRFLOW__LOGGING__OTEL_PORT: 4318
+    # -------
+
     Ecommerce_Supply_Chain_DATABASE_NAME: ${Ecommerce_Supply_Chain_DATABASE_NAME}
     Ecommerce_Supply_Chain_DATABASE_USERNAME: ${Ecommerce_Supply_Chain_DATABASE_USERNAME}
     Ecommerce_Supply_Chain_DATABASE_PASSWORD: ${Ecommerce_Supply_Chain_DATABASE_PASSWORD}
@@ -110,17 +127,17 @@ services:
     environment:
       - POSTGRES_USER=${POSTGRES_CONN_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_CONN_PASSWORD}
-      #- METADATA_DATABASE_NAME=${METADATA_DATABASE_NAME}
-      #- METADATA_DATABASE_USERNAME=${METADATA_DATABASE_USERNAME}
-      #- METADATA_DATABASE_PASSWORD=${METADATA_DATABASE_PASSWORD}
-      #- Ecommerce_Supply_Chain_DATABASE_NAME=${Ecommerce_Supply_Chain_DATABASE_NAME}
-      #- Ecommerce_Supply_Chain_DATABASE_USERNAME=${Ecommerce_Supply_Chain_DATABASE_USERNAME}
-      #- Ecommerce_Supply_Chain_DATABASE_PASSWORD=${Ecommerce_Supply_Chain_DATABASE_PASSWORD}
-      #- CELERY_BACKEND_NAME=${CELERY_BACKEND_NAME}
-      #- CELERY_BACKEND_USERNAME=${CELERY_BACKEND_USERNAME}
-      #- CELERY_BACKEND_PASSWORD=${CELERY_BACKEND_PASSWORD}
-      #- POSTGRES_CONN_HOST=${POSTGRES_CONN_HOST}
-      #- POSTGRES_CONN_PORT=${POSTGRES_CONN_PORT}
+      - METADATA_DATABASE_NAME=${METADATA_DATABASE_NAME}
+      - METADATA_DATABASE_USERNAME=${METADATA_DATABASE_USERNAME}
+      - METADATA_DATABASE_PASSWORD=${METADATA_DATABASE_PASSWORD}
+      - Ecommerce_Supply_Chain_DATABASE_NAME=${Ecommerce_Supply_Chain_DATABASE_NAME}
+      - Ecommerce_Supply_Chain_DATABASE_USERNAME=${Ecommerce_Supply_Chain_DATABASE_USERNAME}
+      - Ecommerce_Supply_Chain_DATABASE_PASSWORD=${Ecommerce_Supply_Chain_DATABASE_PASSWORD}
+      - CELERY_BACKEND_NAME=${CELERY_BACKEND_NAME}
+      - CELERY_BACKEND_USERNAME=${CELERY_BACKEND_USERNAME}
+      - CELERY_BACKEND_PASSWORD=${CELERY_BACKEND_PASSWORD}
+      - POSTGRES_CONN_HOST=${POSTGRES_CONN_HOST}
+      - POSTGRES_CONN_PORT=${POSTGRES_CONN_PORT}
     ports:
       - 5432:5432
     volumes:
@@ -163,6 +180,10 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    # Explicitly tell this service to join the observability-network so it can reach the otel-collector hostname.
+    networks:
+      - default
+      - observability-network
 
   airflow-scheduler:
     <<: *airflow-common
@@ -178,6 +199,11 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+    
+    # Explicitly tell this service to join the observability-network so it can reach the otel-collector hostname.
+    networks:
+      - default
+      - observability-network
 
   airflow-dag-processor:
     <<: *airflow-common
@@ -218,6 +244,10 @@ services:
         condition: service_healthy
       airflow-init:
         condition: service_completed_successfully
+    # Explicitly tell this service to join the observability-network so it can reach the otel-collector hostname.
+    networks:
+      - default
+      - observability-network
 
   airflow-triggerer:
     <<: *airflow-common
@@ -365,3 +395,8 @@ services:
 
 volumes:
   postgres-db-volume:
+
+
+networks:
+  observability-network:
+    external: true

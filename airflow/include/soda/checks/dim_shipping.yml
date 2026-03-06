@@ -1,0 +1,4 @@
+checks for dim_shipping:
+  - row_count > 0
+  - missing_count(shipping_key) = 0
+  - duplicate_count(shipping_key) = 0

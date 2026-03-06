@@ -1,0 +1,6 @@
+checks for dim_product:
+  - row_count > 0
+  - missing_count(product_key) = 0
+  - duplicate_count(product_key) = 0
+  - missing_count(category_id) = 0
+  - missing_count(department_id) = 0

@@ -1,0 +1,34 @@
+checks for dim_date:
+
+  
+  - row_count > 0
+
+  
+  - missing_count(date_key) = 0
+  - duplicate_count(date_key) = 0
+
+  
+  - missing_count(full_date) = 0
+  - duplicate_count(full_date) = 0
+
+  
+  - min(month) >= 1
+  - max(month) <= 12
+
+  - min(day) >= 1
+  - max(day) <= 31
+
+  - min(quarter) >= 1
+  - max(quarter) <= 4
+
+  - min(day_of_week) >= 0
+  - max(day_of_week) <= 6
+
+  - min(week_of_year) >= 1
+  - max(week_of_year) <= 53
+
+  
+  - invalid_percent(is_weekend) = 0:
+      valid values: [true, false]
+
+

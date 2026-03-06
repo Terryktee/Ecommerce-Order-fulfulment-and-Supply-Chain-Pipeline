@@ -1,22 +1,22 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from airflow import DAG
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 import pendulum
 from datetime import timedelta,datetime
-from bronze.data_upload import upload_file
+from bronze.data_upload import upload_file_to_s3
 from silver.modules import data_cleaning,get_latest_dataset,pipeline
 from silver.modules import load_data
-from airflow.decorators import task
-import boto3
-import psycopg2
-from gold.transform_sql import (
-    CREATE_GOLD_SCHEMA,
-    CREATE_DIM_PRODUCTS,
-    CREATE_DIM_CUSTOMERS,
-    CREATE_FACT_SALES,
+from gold.load_to_redshift import (
+    create_dim_customers,create_dim_date,create_dim_delivery,create_dim_orders,
+    create_dim_product,create_dim_shipping,create_fact_sales,create_schema
 )
-from gold.validation_sql import VALIDATE_GOLD
-import logging
-import os
+from gold.validation_sql import validate_gold
+from data_quality.soda import supply_chain_data_quality
+
 
 local_tz = pendulum.timezone("Africa/Harare")
 ingestion_date = datetime.now().strftime("%Y-%m-%d")
@@ -25,13 +25,22 @@ REGION = os.getenv("REGION")
 WORKGROUP = os.getenv("WORKGROUP")
 DB_NAME = os.getenv("DB_NAME")
 ENDPOINT = os.getenv("ENDPOINT")
-
+base_path = "s3://amzon-s3-ecommerce-order-fulfillment/silver"
 object_name = (
     f"bronze/"
     f"ingestion_date={ingestion_date}/"
     f"DataCoSupplyChainDataset_{datetime.now().strftime('%H%M%S')}.csv"
 )
 
+soda_tables_to_test = [
+   "dim_customer",
+    "dim_date",
+    "dim_delivery",
+    "dim_order",
+    "dim_product",
+    "dim_shipping",
+    "fact_sales",
+]
 
 
 default_args={
@@ -43,126 +52,106 @@ default_args={
     "max_active_runs":1,
     "dagrun_timeout":timedelta(hours=1),
     "start_date":datetime(2026, 2, 3, tzinfo=local_tz),
-   # "retries":1,
-   # "retry_delay": timedelta(minutes=5),
+    "retries":1,
+    "retry_delay": timedelta(minutes=5),
 }
 
 with DAG(
-    dag_id="Ingestion",
+    dag_id="Bronze_Supply_Chain_Ingest",
     default_args=default_args,
-    description="DAT to read the local file and rename it",
+    description="DAG to read the local file and rename it",
     schedule="0 14 * * *",
     catchup=False,
 
-) as dag_file_rename:
+) as dag:
     
-    upload_to_aws = upload_file(
+    upload_to_aws = upload_file_to_s3(
         file_name="/opt/airflow/data/bronze/DataCoSupplyChainDataset.csv",
         bucket="amzon-s3-ecommerce-order-fulfillment",
         object_name=object_name,
         )
     
-    upload_to_aws
+    trigger_silver = TriggerDagRunOperator(
+        task_id  = "trigger_silver",
+        trigger_dag_id = "Silver_Supply_Chain_Transform"
+    )
 
-base_path = "s3://amzon-s3-ecommerce-order-fulfillment/silver"
-
+    upload_to_aws >> trigger_silver
 
 with DAG(
-    dag_id="Transformation",
+    dag_id="Silver_Supply_Chain_Transform",
     default_args=default_args,
     description="DAG to extract data from aws , then clean it then transform it then export to delta",
-    schedule="0 15 * * * ",
+    schedule=None,
     catchup=False,
-) as dag_file_name:
-
-    bronze_task = get_latest_dataset.get_latest_dataset()
-    silver_task = data_cleaning.data_cleaning(bronze_task)
-    df_task = load_data.load_silver_csv(silver_task)
-    pipeline_task = pipeline.run_pipeline(df_task, base_path)
-    
-    bronze_task >> silver_task >> df_task >> pipeline_task
-
-with DAG(
-    dag_id="silver_to_gold_pipeline",
-    default_args=default_args,
-    start_date=datetime(2024, 1, 1),
-    schedule="@daily",
-    catchup=False,
-    tags=["redshift", "gold-layer"],
 ) as dag:
 
-    # ==============================
-    # Connection Helper
-    # ==============================
+    get_dataset = get_latest_dataset.get_latest_dataset()
+    cleaning_data = data_cleaning.data_cleaning(get_dataset)
+    loading_cleaned_data_to_s3 = load_data.load_silver_csv(cleaning_data )
+    converting_to_delta_table = pipeline.run_pipeline(loading_cleaned_data_to_s3, base_path)
+    
+    trigger_gold = TriggerDagRunOperator(
+        task_id = "trigger_gold",
+        trigger_dag_id = "Gold_Supply_Chain_Star_Schema"
+    )
+    get_dataset >> cleaning_data  >> loading_cleaned_data_to_s3 >> converting_to_delta_table >>trigger_gold
 
-    def get_redshift_connection():
-        client = boto3.client("redshift-serverless", region_name=REGION)
+with DAG(
+    dag_id="Gold_Supply_Chain_Star_Schema",
+    default_args=default_args,
+    description="DAG to build Star Schema",
+    schedule=None,
+    catchup=False,
+) as dag:
 
-        response = client.get_credentials(
-            workgroupName=WORKGROUP,
-            dbName=DB_NAME,
-            durationSeconds=3600,
-        )
+    schema = create_schema()
 
-        conn = psycopg2.connect(
-            host=ENDPOINT,
-            port=5439,
-            dbname=DB_NAME,
-            user=response["dbUser"],
-            password=response["dbPassword"],
-            sslmode="require"
-        )
+    dim_customers = create_dim_customers()
+    dim_date = create_dim_date()
+    dim_delivery = create_dim_delivery()
+    dim_orders = create_dim_orders()
+    dim_product = create_dim_product()
+    dim_shipping = create_dim_shipping()
+    fact_sales = create_fact_sales()
+    sql_validation = validate_gold()
 
-        return conn
+    trigger_data_quality = TriggerDagRunOperator(
+        task_id = "trigger_data_quality",
+        trigger_dag_id = "Gold_Supply_Chain_Data_Quality_Check"
+    )
+    # Dependencies
+    schema >> [
+        dim_customers,
+        dim_date,
+        dim_delivery,
+        dim_orders,
+        dim_product,
+        dim_shipping,
+    ]
 
-
-    # ==============================
-    # TASK 1: Transform
-    # ==============================
-
-    @task
-    def transform_gold():
-        conn = get_redshift_connection()
-        cursor = conn.cursor()
-
-        cursor.execute(CREATE_GOLD_SCHEMA)
-        cursor.execute(CREATE_DIM_PRODUCTS)
-        cursor.execute(CREATE_DIM_CUSTOMERS)
-        cursor.execute(CREATE_FACT_SALES)
-
-        conn.commit()
-        cursor.close()
-        conn.close()
-
-
-    # ==============================
-    # TASK 2: Validate
-    # ==============================
-
-    @task
-    def validate_gold():
-        conn = get_redshift_connection()
-        cursor = conn.cursor()
-
-        cursor.execute(VALIDATE_GOLD)
-        result = cursor.fetchone()
-
-        logging.info(f"""
-        ==============================
-        GOLD VALIDATION RESULTS
-        ==============================
-        Total Records : {result[0]}
-        Total Sales   : {result[1]}
-        Total Profit  : {result[2]}
-        ==============================
-        """)
-
-        cursor.close()
-        conn.close()
+    [
+        dim_customers,
+        dim_date,
+        dim_delivery,
+        dim_orders,
+        dim_product,
+        dim_shipping,
+    ] >> fact_sales >> sql_validation >> trigger_data_quality
 
 
-    # ==============================
-    # TASK ORDER
-    # ==============================
 
-    transform_gold() >> validate_gold()
+with DAG(
+   dag_id="Gold_Supply_Chain_Data_Quality_Check",
+   default_args=default_args,
+   description="DAG to check the data quality of the data uploaded to data warehouse",
+   schedule=None,
+   catchup=False,
+) as dag:
+
+    soda_tasks = []
+
+    for table in soda_tables_to_test:
+        task = supply_chain_data_quality(table)
+        soda_tasks.append(task)
+

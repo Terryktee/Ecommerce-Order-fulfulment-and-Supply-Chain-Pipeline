@@ -3,7 +3,6 @@ import boto3
 from botocore.exceptions import ClientError
 from airflow.decorators import task
 import os
-from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,7 +10,7 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 @task
-def upload_file(file_name, bucket, object_name=None):
+def upload_file_to_s3(file_name, bucket, object_name=None):
     if not os.path.isfile(file_name):
         raise FileNotFoundError(f"File not found: {file_name}")
 

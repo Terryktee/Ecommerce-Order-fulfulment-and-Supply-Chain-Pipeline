@@ -1,0 +1,4 @@
+checks for dim_delivery:
+  - row_count > 0
+  - missing_count(delivery_key) = 0 
+  - duplicate_count(delivery_key) = 0
