@@ -1,7 +1,5 @@
 # 📦 Supply Chain and Ecommerce Orderfulment Pipeline
 
----
-
 ## Problem Definition
 
 Supply Chain and Ecommerce operations generate large volumes of data from multiple systems, including orders, shipments, warehouse operations, delivery times and customer feedback.
@@ -18,8 +16,7 @@ Without an integrated data pipeline and structured analytical model, transformin
 
 
 ## Stakerholder Objectives
----
-* **Sales Performance:** Monitor and improve overall sales across products and regions.
+* **Sales Performance:** onitor and improve overall sales across products and regions.
 * **Profitability:** Analyze profit margins to maximize business profitability.
 * **Customer Insights:** Understand customer behavior to improve targeting and retention.
 * **Logistics Efficiency:** Reduce late deliveries and improve shipping performance.
@@ -28,8 +25,6 @@ Without an integrated data pipeline and structured analytical model, transformin
 * **Discount Strategy:** Assess the impact of discounts on sales and profit.
 
 # ✅ Solution
----
-
 This project implements a **cloud-based data pipeline** and builds an **OLAP-ready data warehouse** to enable efficient logistics analytics.
 
 The solution:
@@ -45,15 +40,12 @@ The result is a scalable analytical system that improves visibility, performance
 
 
 # Architecture Diagram
----
-
 ![AWS architecture](documentation/data/architecture.png)
 
 
 
 # 🛠️ Tech Stack
----
-![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
+![Apache Airflw](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=style=flat\&logo=docker\&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=style=flat\&logo=python\&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-025E8C?style=style=flat\&logo=postgresql\&logoColor=white)
@@ -73,8 +65,7 @@ The result is a scalable analytical system that improves visibility, performance
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat\&logo=power-bi\&logoColor=black)
 
 # Data Warehouse Overview
----
-The analytics schema in Redshift employs a star-schema centered on one fact table that capture both granular line-level delivery performance and higher-level order-metrics and surrounded by four conformed dimensions (orders, customers, products and dates).
+The analytics schema in edshift employs a star-schema centered on one fact table that capture both granular line-level delivery performance and higher-level order-metrics and surrounded by four conformed dimensions (orders, customers, products and dates).
 
 This design lets you slice & dice daily service outcomes across the:
 
@@ -90,8 +81,6 @@ All in **sub-second, ad-hoc queries**.
 
 
 # Technology Choices
-
----
 
 # 1. Data Storage – Amazon S3 Data Lake
 
@@ -253,8 +242,6 @@ Using Git enables:
 * Code review
 * Reproducible pipelines
 
-
-
 # 8. Monitoring & Logging
 
 Monitoring mechanisms were implemented to ensure pipeline reliability.
@@ -264,8 +251,6 @@ Monitoring mechanisms were implemented to ensure pipeline reliability.
 
 This ensures quick troubleshooting and reliable data processing.
 
-
-
 ## GitHub Actions
 
 Orchestrates the above steps, then stages scripts to S3 for Glue to pick up.
@@ -273,8 +258,6 @@ Orchestrates the above steps, then stages scripts to S3 for Glue to pick up.
 ![github actions img](data/github_actions.png)
 
 ![github actions img](data/github_actions_2.png)
-
-
 
 ## 10. Monitoring & Alerting
 
@@ -292,11 +275,7 @@ Prometheus scrapes Airflow, with Grafana dashboards visualizing system health.
 
 ![grafana img](data/grafana_3.png)
 
-
-
 # Future Improvements
-
----
 
 While the current pipeline is functional and production-ready, several improvements can further enhance scalability, maintainability and governance.
 
@@ -310,5 +289,3 @@ Several enhancements can further strengthen the platform:
 * Implement **data cataloging and metadata management**
 * Introduce **cost monitoring for cloud resources**
 * Implement **data security and access control policies**
-
-
