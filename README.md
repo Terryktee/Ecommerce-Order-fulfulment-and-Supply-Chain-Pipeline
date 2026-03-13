@@ -64,6 +64,33 @@ The result is a scalable analytical system that improves visibility, performance
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=style=flat\&logo=linux\&logoColor=black)
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat\&logo=power-bi\&logoColor=black)
 
+### Executive Summary
+
+The  **Supply Chain and Sales Performance dashboard** provides a clear, up-to-date view of the company’s sales, profit, orders and delivery performance. It helps teams track overall business performance while ensuring operations remain efficient as the business grows.
+
+At the same time, the dashboard highlights **top-performing products, key regions, and customer segments** that drive most of the revenue. It also reveals areas where **discounting and pricing strategies may be affecting profitability**.
+
+By showing where sales are strongest and where improvements are needed, the dashboard gives **operations, sales and management teams** the insights they need to make faster, data-driven decisions and improve overall business performance. 
+
+
+### Key Insights
+
+* Generated **$36.78M in sales** and **$3.97M profit** from **66K orders**, with an overall **11% profit margin**.
+* **Sales and profit remained stable from 2015–2017**, followed by a **sharp decline in 2018**, indicating potential operational or data issues.
+* **Sports and outdoor products** (e.g., tents, bikes, running shoes) are the **top revenue drivers**.
+* The **Consumer segment contributes the highest share of sales**, highlighting a strong **B2C focus**.
+* The supply chain is **highly efficient**, with a **late delivery rate of only 1%**.
+
+![Executive Dashboard](documentation/data/dashboard.png)
+
+### Operational and Business Outcomes
+
+* **Improved Supply Chain Visibility:** The dashboard provides a clear view of sales, profit, orders and delivery performance, enabling better operational monitoring.
+* **Better Decision-Making:** Identifies top-performing products, regions and customer segments to support data-driven business strategies.
+* **Profit Optimization Opportunities:** Analysis of discounts vs. profit highlights areas where pricing and discount strategies can be improved.
+* **Market Expansion Insights:** Regional sales analysis helps identify high-performing markets and underperforming regions with growth potential.
+* **Operational Efficiency Monitoring:** Delivery metrics, including a **1% late delivery rate**, help track logistics performance and maintain service quality.
+
 # Data Warehouse Overview
 The analytics schema in edshift employs a star-schema centered on one fact table that capture both granular line-level delivery performance and higher-level order-metrics and surrounded by four conformed dimensions (orders, customers, products and dates).
 
