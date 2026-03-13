@@ -103,7 +103,7 @@ This design lets you slice & dice daily service outcomes across the:
 
 All in **sub-second, ad-hoc queries**.
 
-![Supply Chain dashboard](data/star_schema.png)
+![Supply Chain dashboard](documentation/data/star_schema.png)
 
 
 
