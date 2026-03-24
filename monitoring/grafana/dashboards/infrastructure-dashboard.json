@@ -1,0 +1,80 @@
+{
+  "uid": "infra-node-metrics",
+  "title": "Infrastructure – Node Metrics",
+  "schemaVersion": 39,
+  "refresh": "30s",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type": "row",
+      "title": "System Health",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 }
+    },
+    {
+      "type": "gauge",
+      "title": "CPU Busy %",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "100 - (avg by(instance)(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 1, "w": 6, "h": 6 }
+    },
+    {
+      "type": "gauge",
+      "title": "RAM Used %",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "(1 - (node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes))*100"
+        }
+      ],
+      "gridPos": { "x": 6, "y": 1, "w": 6, "h": 6 }
+    },
+    {
+      "type": "gauge",
+      "title": "Disk Used %",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "100 - (node_filesystem_avail_bytes{mountpoint=\"/\"}/node_filesystem_size_bytes{mountpoint=\"/\"}*100)"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 1, "w": 6, "h": 6 }
+    },
+    {
+      "type": "stat",
+      "title": "CPU Cores",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "count(node_cpu_seconds_total{mode=\"system\"})"
+        }
+      ],
+      "gridPos": { "x": 18, "y": 1, "w": 6, "h": 6 }
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU Usage",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "100 - (avg by(instance)(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 7, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory Usage",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "node_memory_MemTotal_bytes-node_memory_MemAvailable_bytes"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 7, "w": 12, "h": 8 }
+    }
+  ]
+}

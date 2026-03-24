@@ -25,7 +25,6 @@ REGION = os.getenv("REGION")
 WORKGROUP = os.getenv("WORKGROUP")
 DB_NAME = os.getenv("DB_NAME")
 ENDPOINT = os.getenv("ENDPOINT")
-base_path = "s3://amzon-s3-ecommerce-order-fulfillment/silver"
 object_name = (
     f"bronze/"
     f"ingestion_date={ingestion_date}/"
@@ -52,8 +51,8 @@ default_args={
     "max_active_runs":1,
     "dagrun_timeout":timedelta(hours=1),
     "start_date":datetime(2026, 2, 3, tzinfo=local_tz),
-    "retries":1,
-    "retry_delay": timedelta(minutes=5),
+   # "retries":1,
+    #"retry_delay": timedelta(minutes=5),
 }
 
 with DAG(
@@ -85,17 +84,19 @@ with DAG(
     schedule=None,
     catchup=False,
 ) as dag:
+    
+    base_path = "s3://amzon-s3-ecommerce-order-fulfillment/silver/supply_chain_order_fulfullment"
 
     get_dataset = get_latest_dataset.get_latest_dataset()
-    cleaning_data = data_cleaning.data_cleaning(get_dataset)
-    loading_cleaned_data_to_s3 = load_data.load_silver_csv(cleaning_data )
-    converting_to_delta_table = pipeline.run_pipeline(loading_cleaned_data_to_s3, base_path)
+    cleaned_data_path = data_cleaning.data_cleaning(get_dataset)
+    
+    converting_to_delta_table = pipeline.run_pipeline(cleaned_data_path,base_path)
     
     trigger_gold = TriggerDagRunOperator(
         task_id = "trigger_gold",
         trigger_dag_id = "Gold_Supply_Chain_Star_Schema"
     )
-    get_dataset >> cleaning_data  >> loading_cleaned_data_to_s3 >> converting_to_delta_table >>trigger_gold
+    get_dataset >> cleaned_data_path  >> converting_to_delta_table >> trigger_gold
 
 with DAG(
     dag_id="Gold_Supply_Chain_Star_Schema",

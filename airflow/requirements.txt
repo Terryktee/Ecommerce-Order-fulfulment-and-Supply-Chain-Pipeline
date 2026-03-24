@@ -1,13 +1,25 @@
-soda-core-redshift == 3.5.6
-pytest == 9.0.2
-apache-airflow-providers-openlineage
-astronomer-cosmos
-boto3
-pydantic
-apache-airflow-providers-amazon
-apache-airflow-providers-slack
-pandas
-deltalake[aws]
-s3fs
-pyarrow
-apache-airflow[statsd,otel]
+# Core libs
+pandas>=2.1,<2.3
+pyarrow>=14,<16
+
+# AWS + data lake
+boto3>=1.34
+s3fs>=2024.2.0
+awswrangler[deltalake]>=3.6.0
+deltalake[aws]>=0.17.0
+
+# Airflow providers (DO NOT reinstall airflow itself)
+apache-airflow-providers-amazon>=8.0.0
+apache-airflow-providers-slack>=8.0.0
+apache-airflow-providers-openlineage>=1.8.0
+
+# Data quality / orchestration
+soda-core-redshift>=3.0.0
+astronomer-cosmos>=1.3.0
+
+# Utilities
+pydantic>=2.5
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=7.4

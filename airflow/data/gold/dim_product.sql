@@ -27,13 +27,21 @@ INSERT INTO gold.dim_product (
     price
 )
 SELECT DISTINCT
-    product_card_id::INT,
-    product_name,
-    category_id,
-    category_name,
-    department_id,
-    department_name,
-    product_image,
-    NULLIF(product_price,'NNNN')::DECIMAL(10,2)
-FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment;
+    CAST(product_card_id AS INT),
 
+    NULLIF(TRIM(product_name), ''),
+    NULLIF(TRIM(category_id), ''),
+    NULLIF(TRIM(category_name), ''),
+    NULLIF(TRIM(department_id), ''),
+    NULLIF(TRIM(department_name), ''),
+    NULLIF(TRIM(product_image), ''),
+
+    CASE 
+        WHEN product_price IS NULL THEN NULL
+        WHEN TRIM(product_price) IN ('', 'NNNN', 'NULL') THEN NULL
+        WHEN REGEXP_INSTR(product_price, '^[0-9]+(\.[0-9]+)?$') = 1
+            THEN CAST(product_price AS DECIMAL(10,2))
+        ELSE NULL
+    END AS price
+
+FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment;

@@ -18,7 +18,7 @@ def test_dags_integrity(dagbag):
 
     expected_task_counts = {
         "Bronze_Supply_Chain_Ingest":2,
-        "Silver_Supply_Chain_Transform":5,
+        "Silver_Supply_Chain_Transform":4,
         "Gold_Supply_Chain_Star_Schema":10,
         "Gold_Supply_Chain_Data_Quality_Check":7,
 

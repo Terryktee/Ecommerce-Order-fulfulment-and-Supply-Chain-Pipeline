@@ -45,16 +45,68 @@ SELECT
     p.product_key,
     s.shipping_key,
     d.delivery_key,
-    TO_CHAR(f.order_date::timestamp,'YYYYMMDD')::INT,
-    TO_CHAR(f.shipping_date::timestamp,'YYYYMMDD')::INT,
-    f.order_item_quantity::INT,
-    NULLIF(f.sales_amount,'NNNN')::DECIMAL(18,2),
-    NULLIF(f.order_item_discount,'NNNN')::DECIMAL(10,2),
-    NULLIF(f.profit_per_order,'NNNN')::DECIMAL(18,2),
-    NULLIF(f.order_item_profit_ratio,'NNNN')::DECIMAL(5,4)
-FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment f
-JOIN gold.dim_customer c ON f.customer_id = c.customer_id
-JOIN gold.dim_product p ON f.product_card_id = p.product_id
-JOIN gold.dim_order o ON f.order_id = o.order_id
-JOIN gold.dim_shipping s ON f.shipping_mode = s.shipping_mode
-JOIN gold.dim_delivery d ON f.delivery_status = d.delivery_status;
+
+    -- Safe date handling
+    CASE 
+        WHEN f.order_date IS NULL THEN NULL
+        ELSE TO_CHAR(f.order_date::TIMESTAMP, 'YYYYMMDD')::INT
+    END AS order_date_key,
+
+    CASE 
+        WHEN f.shipping_date IS NULL THEN NULL
+        ELSE TO_CHAR(f.shipping_date::TIMESTAMP, 'YYYYMMDD')::INT
+    END AS shipping_date_key,
+
+    -- Safe numeric casting
+    CAST(f.order_item_quantity AS INT),
+
+    CASE 
+        WHEN f.sales_amount IS NULL THEN NULL
+        WHEN TRIM(f.sales_amount) IN ('', 'NNNN', 'NULL') THEN NULL
+        WHEN REGEXP_INSTR(f.sales_amount, '^[0-9]+(\.[0-9]+)?$') = 1
+            THEN CAST(f.sales_amount AS DECIMAL(18,2))
+        ELSE NULL
+    END AS sales_amount,
+
+    CASE 
+        WHEN f.order_item_discount IS NULL THEN NULL
+        WHEN TRIM(f.order_item_discount) IN ('', 'NNNN', 'NULL') THEN NULL
+        WHEN REGEXP_INSTR(f.order_item_discount, '^[0-9]+(\.[0-9]+)?$') = 1
+            THEN CAST(f.order_item_discount AS DECIMAL(10,2))
+        ELSE NULL
+    END AS discount_amount,
+
+    CASE 
+        WHEN f.profit_per_order IS NULL THEN NULL
+        WHEN TRIM(f.profit_per_order) IN ('', 'NNNN', 'NULL') THEN NULL
+        WHEN REGEXP_INSTR(f.profit_per_order, '^[0-9]+(\.[0-9]+)?$') = 1
+            THEN CAST(f.profit_per_order AS DECIMAL(18,2))
+        ELSE NULL
+    END AS profit_amount,
+
+    CASE 
+        WHEN f.order_item_profit_ratio IS NULL THEN NULL
+        WHEN TRIM(f.order_item_profit_ratio) IN ('', 'NNNN', 'NULL') THEN NULL
+        WHEN REGEXP_INSTR(f.order_item_profit_ratio, '^[0-9]+(\.[0-9]+)?$') = 1
+            THEN CAST(f.order_item_profit_ratio AS DECIMAL(5,4))
+        ELSE NULL
+    END AS profit_ratio
+
+FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment f
+
+JOIN gold.dim_customer c 
+    ON f.customer_id = c.customer_id
+    AND c.is_current = TRUE
+
+JOIN gold.dim_product p 
+    ON f.product_card_id = p.product_id
+    AND p.is_current = TRUE
+
+JOIN gold.dim_order o 
+    ON f.order_id = o.order_id
+
+JOIN gold.dim_shipping s 
+    ON f.shipping_mode = s.shipping_mode
+
+JOIN gold.dim_delivery d 
+    ON f.delivery_status = d.delivery_status;

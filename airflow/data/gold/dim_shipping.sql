@@ -10,4 +10,4 @@ DISTSTYLE ALL;
 
 INSERT INTO gold.dim_shipping (shipping_mode)
 SELECT DISTINCT shipping_mode
-FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment;
+FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment;

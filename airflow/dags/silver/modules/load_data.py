@@ -1,47 +1,41 @@
 import pandas as pd
 from airflow.decorators import task
+import boto3, os, logging, io
 
 @task
-def load_silver_csv(s3_path: str) -> pd.DataFrame:
-    import boto3, os, logging, io
-    import pandas as pd
-
+def load_silver_csv(df: pd.DataFrame) -> str:
+    """
+    Receives a DataFrame, saves it to S3, and returns the S3 Path string.
+    """
     BUCKET = os.getenv("BUCKET")
     REGION = os.getenv("REGION")
+    
+    # Define where the cleaned file should go
+    # Using a fixed name or dynamic timestamp is fine
+    output_key = "silver/temp_cleaned_data.csv"
+    output_path = f"s3://{BUCKET}/{output_key}"
 
-    if s3_path.startswith("s3://"):
-        s3_path = s3_path.replace(f"s3://{BUCKET}/", "")
-
-    logging.info(f"S3 PATH USED: {s3_path}")
+    logging.info(f"Saving cleaned DataFrame to: {output_path}")
 
     session = boto3.Session(
         aws_access_key_id=os.getenv("AWS_ACCESS_KEY"),
         aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
         region_name=REGION,
     )
-
     s3 = session.client("s3")
-    body = s3.get_object(Bucket=BUCKET, Key=s3_path)["Body"].read()
 
-    logging.info(f"S3 OBJECT SIZE: {len(body)} bytes")
-    logging.info(f"FIRST 200 BYTES: {body[:200]}")
+    # Convert DF to CSV in memory
+    csv_buffer = io.StringIO()
+    df.to_csv(csv_buffer, index=False)
 
-    # 🔑 Decode bytes → text
-    text = body.decode("latin1", errors="replace")
-
-    df = pd.read_csv(
-        io.StringIO(text),
-        sep=",",
-        engine="python",
-        dtype=str
+    # Upload to S3
+    s3.put_object(
+        Bucket=BUCKET, 
+        Key=output_key, 
+        Body=csv_buffer.getvalue()
     )
 
-    df.columns = df.columns.str.strip()
+    logging.info(f"Successfully saved {len(df)} rows to S3.")
 
-    logging.info(f"Loaded dataframe: {df.shape[0]} rows × {df.shape[1]} columns")
-
-    return df
-
-
-
-
+    # RETURN THE STRING PATH
+    return output_path

@@ -18,8 +18,8 @@ def data_cleaning(bronze_key: str) -> str:
     Cleans a bronze-layer CSV and writes a silver-layer dataset to S3.
     Ensures columns needed for 3NF are present and populated.
     """
-    cleaned_date = datetime.utcnow().strftime("%Y-%m-%d")
-    timestamp = datetime.utcnow().strftime("%H%M%S")
+    cleaned_date = datetime.now().strftime("%Y-%m-%d")
+    timestamp = datetime.now().strftime("%H%M%S")
 
     silver_key = (
         f"silver/cleaned_date={cleaned_date}/"

@@ -1,0 +1,187 @@
+{
+  "uid": "airflow-health",
+  "title": "Airflow – Scheduler & Cluster Health (Refactored)",
+  "schemaVersion": 39,
+  "refresh": "30s",
+  "panels": [
+
+    {
+      "type": "row",
+      "title": "Scheduler",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 }
+    },
+
+    {
+      "type": "stat",
+      "title": "Scheduler Heartbeats / min",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "rate(airflow_scheduler_heartbeat_total[5m]) * 60" }
+      ],
+      "gridPos": { "x": 0, "y": 1, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Scheduler Alive",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "up{job=\"airflow-scheduler\"}" }
+      ],
+      "gridPos": { "x": 6, "y": 1, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Executable Tasks",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "sum(airflow_scheduler_tasks_executable)" }
+      ],
+      "gridPos": { "x": 12, "y": 1, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Running Tasks",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "sum(airflow_ti_running)" }
+      ],
+      "gridPos": { "x": 18, "y": 1, "w": 6, "h": 5 }
+    },
+
+    {
+      "type": "timeseries",
+      "title": "DAG Parse Time",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "airflow_dag_processing_total_parse_time" }
+      ],
+      "gridPos": { "x": 0, "y": 6, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "DAG Import Errors",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "airflow_dag_processing_import_errors" }
+      ],
+      "gridPos": { "x": 12, "y": 6, "w": 12, "h": 8 }
+    },
+
+    {
+      "type": "row",
+      "title": "Task Health",
+      "gridPos": { "x": 0, "y": 14, "w": 24, "h": 1 }
+    },
+
+    {
+      "type": "stat",
+      "title": "Total Successful Tasks",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "sum(airflow_ti_successes)" }
+      ],
+      "gridPos": { "x": 0, "y": 15, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Total Failed Tasks",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "sum(airflow_ti_failures)" }
+      ],
+      "gridPos": { "x": 6, "y": 15, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Failure Rate (%)",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "sum(rate(airflow_ti_failures[5m])) / sum(rate(airflow_ti_failures[5m]) + rate(airflow_ti_successes[5m])) * 100"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 15, "w": 6, "h": 5 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Failures by DAG",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "sum by (dag_id) (rate(airflow_ti_failures[5m]))"
+        }
+      ],
+      "gridPos": { "x": 18, "y": 15, "w": 6, "h": 5 }
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Task Duration (P95)",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(airflow_task_duration_seconds_bucket[5m])) by (le))"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 20, "w": 12, "h": 8 }
+    },
+
+    {
+      "type": "row",
+      "title": "Executor",
+      "gridPos": { "x": 0, "y": 28, "w": 24, "h": 1 }
+    },
+
+    {
+      "type": "stat",
+      "title": "Executor Open Slots",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "sum(airflow_executor_open_slots)" }
+      ],
+      "gridPos": { "x": 0, "y": 29, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Queued Tasks",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "sum(airflow_executor_queued_tasks)" }
+      ],
+      "gridPos": { "x": 6, "y": 29, "w": 6, "h": 5 }
+    },
+    {
+      "type": "stat",
+      "title": "Executor Utilization (%)",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "sum(airflow_executor_running_tasks) / (sum(airflow_executor_running_tasks) + sum(airflow_executor_open_slots)) * 100"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 29, "w": 6, "h": 5 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Executor Running Tasks",
+      "datasource": "Prometheus",
+      "targets": [
+        { "expr": "sum(airflow_executor_running_tasks)" }
+      ],
+      "gridPos": { "x": 18, "y": 29, "w": 6, "h": 5 }
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Backlog (Queued Tasks Over Time)",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "sum(airflow_executor_queued_tasks)"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 34, "w": 24, "h": 8 }
+    }
+
+  ]
+}

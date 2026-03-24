@@ -29,8 +29,8 @@ SELECT DISTINCT
     CASE WHEN EXTRACT(DOW FROM d) IN (0,6) THEN TRUE ELSE FALSE END
 FROM (
     SELECT order_date::timestamp AS d
-    FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment
+    FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment
     UNION
     SELECT shipping_date::timestamp
-    FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment
+    FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment
 ) t;

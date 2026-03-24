@@ -9,5 +9,5 @@ DISTSTYLE ALL;
 
 INSERT INTO gold.dim_delivery (delivery_status)
 SELECT DISTINCT delivery_status
-FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment;
+FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment;
 

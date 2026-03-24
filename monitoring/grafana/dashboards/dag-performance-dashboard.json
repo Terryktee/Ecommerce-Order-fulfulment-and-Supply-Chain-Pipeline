@@ -1,0 +1,70 @@
+{
+  "uid": "airflow-dag-performance",
+  "title": "Airflow – DAG Performance",
+  "schemaVersion": 39,
+  "refresh": "30s",
+  "timezone": "browser",
+  "templating": {
+    "list": [
+      {
+        "name": "dag_id",
+        "type": "query",
+        "datasource": "Prometheus",
+        "query": "label_values(airflow_dagrun_duration_success, dag_id)",
+        "includeAll": true,
+        "multi": true
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "row",
+      "title": "DAG Performance",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 1 }
+    },
+    {
+      "type": "timeseries",
+      "title": "DAG Run Duration",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "avg by(dag_id)(airflow_dagrun_duration_success{dag_id=~\"$dag_id\"})"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 1, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Schedule Delay",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "avg by(dag_id)(airflow_dagrun_schedule_delay{dag_id=~\"$dag_id\"})"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 1, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Running Task Instances",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "airflow_ti_running"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 9, "w": 12, "h": 8 }
+    },
+    {
+      "type": "timeseries",
+      "title": "Pool Running Slots",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "airflow_pool_running_slots"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 9, "w": 12, "h": 8 }
+    }
+  ]
+}

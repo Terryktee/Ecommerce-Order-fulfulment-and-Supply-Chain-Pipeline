@@ -20,4 +20,4 @@ SELECT DISTINCT
     order_status,
     sales_type,
     order_region
-FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment;
+FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment;

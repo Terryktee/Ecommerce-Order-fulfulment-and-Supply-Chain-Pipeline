@@ -44,5 +44,5 @@ SELECT DISTINCT
     customer_street,
     latitude::DECIMAL(9,6),
     longitude::DECIMAL(9,6)
-FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfulment;
+FROM awsdatacatalog.lakehouse_silver.silver_supply_chain_order_fulfullment;
 

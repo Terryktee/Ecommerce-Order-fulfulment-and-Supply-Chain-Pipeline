@@ -310,7 +310,7 @@ While the current pipeline is functional and production-ready, several improveme
 
 Several enhancements can further strengthen the platform:
 
-* 🔄 dbt for Transformations
+* Implement **dbt for Transformations**
 * Implement **data quality validation frameworks**
 * Implement **Infrastructure as Code (Terraform)**
 * Implement **data cataloging and metadata management**
