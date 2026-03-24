@@ -342,7 +342,7 @@ This ensures quick troubleshooting and reliable data processing.
 
 ![github actions img](documentation/data/cicd.png)
 
-## 10. Monitoring & Alerting
+### 10. Monitoring & Alerting
 
 Prometheus scrapes Airflow, with Grafana dashboards visualizing system health.
 
@@ -360,7 +360,8 @@ Prometheus scrapes Airflow, with Grafana dashboards visualizing system health.
 
 ### Slack Notifications
 ![slack img](documentation/data/slack_alerts.png)
-# Future Improvements
+
+### Future Improvements
 
 While the current pipeline is functional and production-ready, several improvements can further enhance scalability, maintainability and governance.
 
