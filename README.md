@@ -282,9 +282,7 @@ This ensures quick troubleshooting and reliable data processing.
 
 Orchestrates the above steps, then stages scripts to S3 for Glue to pick up.
 
-![github actions img](data/github_actions.png)
-
-![github actions img](data/github_actions_2.png)
+![github actions img](documentation/data/cicd.png)
 
 ## 10. Monitoring & Alerting
 
@@ -292,16 +290,18 @@ Prometheus scrapes Airflow, with Grafana dashboards visualizing system health.
 
 ### Airflow dag Dashboard
 
-![grafana img](data/grafana_1.png)
+![grafana img](documentation/data/dag_performance.png)
 
 ### Airflow cluster dashboard
 
-![grafana img](data/grafana_2.png)
+![grafana img](documentation/data/airflow_health.png)
 
 ### Operational management
 
-![grafana img](data/grafana_3.png)
+![grafana img](documentation/data/operational_grafana.png)
 
+### Slack Notifications
+![slack img](documentation/data/slack_alerts.png)
 # Future Improvements
 
 While the current pipeline is functional and production-ready, several improvements can further enhance scalability, maintainability and governance.
