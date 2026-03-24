@@ -1,5 +1,28 @@
 # 📦 Supply Chain and Ecommerce Orderfulment Pipeline
 
+# Architecture Diagram
+![AWS architecture](documentation/data/architecture.png)
+
+# 🛠️ Tech Stack
+![Apache Airflw](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=style=flat\&logo=docker\&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=style=flat\&logo=python\&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-025E8C?style=style=flat\&logo=postgresql\&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=style=flat\&logo=amazon-s3\&logoColor=white)
+![Amazon Redshift](https://img.shields.io/badge/Amazon%20Redshift-8C4FFF?style=style=flat\&logo=amazon-redshift\&logoColor=white)
+![AWS Glue](https://img.shields.io/badge/AWS%20Glue-FF9900?style=style=flat\&logo=amazonaws\&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=style=flat\&logo=prometheus\&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=style=flat\&logo=grafana\&logoColor=white)
+![Loki](https://img.shields.io/badge/Grafana%20Loki-F46800?style=style=flat\&logo=grafana\&logoColor=white)
+![Tempo](https://img.shields.io/badge/Grafana%20Tempo-F46800?style=style=flat\&logo=grafana\&logoColor=white)
+![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-000000?style=style=flat\&logo=opentelemetry\&logoColor=white)
+![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=style=flat\&logo=pytest\&logoColor=white)
+![Linting](https://img.shields.io/badge/Linting-Flake8-4B8BBE?style=for-the-badge)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=style=flat\&logo=github)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=style=flat\&logo=github-actions)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=style=flat\&logo=linux\&logoColor=black)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat\&logo=power-bi\&logoColor=black)
+
 ### Executive Summary
 
 This project implements an end-to-end data engineering pipeline designed to improve order fulfilment visibility, sales performance analysis, and supply chain efficiency in an e-commerce environment.
@@ -142,29 +165,6 @@ This design supports **sub-second query performance** for BI dashboards and ad-h
 - Limited handling of late-arriving data
 - No strict SLA guarantees for data freshness
 - Simplified supply chain model (no multi-warehouse complexity)
-
-# Architecture Diagram
-![AWS architecture](documentation/data/architecture.png)
-
-# 🛠️ Tech Stack
-![Apache Airflw](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=style=flat\&logo=docker\&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=style=flat\&logo=python\&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-025E8C?style=style=flat\&logo=postgresql\&logoColor=white)
-![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=style=flat\&logo=amazon-s3\&logoColor=white)
-![Amazon Redshift](https://img.shields.io/badge/Amazon%20Redshift-8C4FFF?style=style=flat\&logo=amazon-redshift\&logoColor=white)
-![AWS Glue](https://img.shields.io/badge/AWS%20Glue-FF9900?style=style=flat\&logo=amazonaws\&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=style=flat\&logo=prometheus\&logoColor=white)
-![Grafana](https://img.shields.io/badge/Grafana-F46800?style=style=flat\&logo=grafana\&logoColor=white)
-![Loki](https://img.shields.io/badge/Grafana%20Loki-F46800?style=style=flat\&logo=grafana\&logoColor=white)
-![Tempo](https://img.shields.io/badge/Grafana%20Tempo-F46800?style=style=flat\&logo=grafana\&logoColor=white)
-![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-000000?style=style=flat\&logo=opentelemetry\&logoColor=white)
-![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=style=flat\&logo=pytest\&logoColor=white)
-![Linting](https://img.shields.io/badge/Linting-Flake8-4B8BBE?style=for-the-badge)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=style=flat\&logo=github)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=style=flat\&logo=github-actions)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=style=flat\&logo=linux\&logoColor=black)
-![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat\&logo=power-bi\&logoColor=black)
 
 # Technology Choices
 
