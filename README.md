@@ -42,7 +42,7 @@ Product, customer, and regional performance
 
 The pipeline processes ~18K orders per batch with an average runtime of 5–10 minutes, while enabling sub-second analytical queries in Amazon Redshift.
 
-## Problem Definition
+### Problem Definition
 
 Supply Chain and Ecommerce operations generate large volumes of data from multiple systems, including orders, shipments, warehouse operations, delivery times and customer feedback.
 
@@ -66,7 +66,7 @@ Without an integrated data pipeline and structured analytical model, transformin
 * **Product Performance:** Evaluate product demand to optimize product offerings.
 * **Discount Strategy:** Assess the impact of discounts on sales and profit.
 
-# ✅ Solution
+### Solution
 This project implements a **cloud-based data pipeline** and builds an **OLAP-ready data warehouse** to enable efficient logistics analytics.
 
 The solution:
@@ -109,7 +109,7 @@ The result is a scalable analytical system that improves visibility, performance
 * **Scalable Analytics Foundation:**  
   The modular pipeline design (Airflow + S3 + Redshift) enables easy extension to additional data sources, supporting future growth and advanced analytics use cases.
 
-# Data Warehouse Overview
+### Data Warehouse Overview
 
 The analytics layer is built using a **star schema** in Amazon Redshift, designed to support high-performance analytical queries.
 
@@ -139,7 +139,7 @@ This design supports **sub-second query performance** for BI dashboards and ad-h
 
 ![Supply Chain dashboard](documentation/data/star_schema.png)
 
-## ⚙️ System Performance & Scale
+### System Performance & Scale
 
 - Processes ~18K orders and associated logistics records across historical datasets  
 - Average pipeline (Airflow DAG) runtime: ~5–10 minutes per batch load  
@@ -152,23 +152,23 @@ This design supports **sub-second query performance** for BI dashboards and ad-h
 - Airflow retry mechanisms and logging ensure pipeline robustness  
 - CI/CD pipeline includes unit, integration and DAG-level tests  
 
-## Assumptions & Constraints
+### Assumptions & Constraints
 
-### Assumptions
+#### Assumptions
 - Data represents a single e-commerce platform
 - Pipeline operates on batch processing (no real-time streaming)
 - Source data schemas remain relatively stable
 - Delivery timestamps are accurate and complete
 
-### Constraints
+#### Constraints
 - No Change Data Capture (CDC) implemented
 - Limited handling of late-arriving data
 - No strict SLA guarantees for data freshness
 - Simplified supply chain model (no multi-warehouse complexity)
 
-# Technology Choices
+### Technology Choices
 
-# 1. Data Storage – Amazon S3 Data Lake
+### 1. Data Storage – Amazon S3 Data Lake
 
 **Amazon S3** was used as the primary storage layer for the project.
 
@@ -198,7 +198,7 @@ This layered structure helps maintain:
 
 In addition, a **separate S3 bucket was created for testing and development purposes**, allowing experimentation and validation of ETL processes without affecting production data.
 
-# 2. Data Processing & ETL – Python, Pandas, PyArrow, Delta-rs
+### 2. Data Processing & ETL – Python, Pandas, PyArrow, Delta-rs
 
 **Python** was used to implement the ETL (Extract, Transform, Load) pipeline.
 
@@ -219,9 +219,7 @@ The implementation relies on several Python libraries:
 
 Using Python with these libraries allows efficient processing of datasets while maintaining compatibility with modern **data lake table formats**.
 
-
-
-# 3. Data Warehousing – Amazon Redshift
+### 3. Data Warehousing – Amazon Redshift
 
 **Amazon Redshift** was used as the analytical data warehouse.
 
@@ -246,7 +244,7 @@ This schema enables **fast analytical queries, aggregations, and reporting** for
 
 
 
-# 4. Data Modeling – SQL
+### 4. Data Modeling – SQL
 
 **SQL** was used to transform the warehouse data into **analytics-ready models** within Amazon Redshift.
 
@@ -276,7 +274,7 @@ These SQL transformations convert the **Silver layer datasets** into a **Gold la
 
 
 
-# 5. Workflow Orchestration – Apache Airflow
+### 5. Workflow Orchestration – Apache Airflow
 
 **Apache Airflow** was used to orchestrate the data pipeline.
 
@@ -291,7 +289,7 @@ Airflow ensures tasks run in the correct order and provides monitoring for pipel
 
 
 
-# 6. Business Intelligence & Visualization
+### 6. Business Intelligence & Visualization
 
 A **dashboarding tool (Power BI)** was used to visualize insights from the Redshift warehouse.
 
@@ -308,7 +306,7 @@ This allows stakeholders to monitor **sales trends, profitability, logistics per
 
 
 
-# 7. Version Control & Collaboration – GitHub
+### 7. Version Control & Collaboration – GitHub
 
 All project code including:
 
@@ -326,7 +324,7 @@ Using Git enables:
 * Code review
 * Reproducible pipelines
 
-# 8. Monitoring & Logging
+### 8. Monitoring & Logging
 
 Monitoring mechanisms were implemented to ensure pipeline reliability.
 
@@ -335,7 +333,7 @@ Monitoring mechanisms were implemented to ensure pipeline reliability.
 
 This ensures quick troubleshooting and reliable data processing.
 
-## GitHub Actions
+### GitHub Actions
 
 * **`build-and-push-image`** – Builds a Docker image if the Dockerfile or requirements changed (or on manual trigger) and pushes it to Docker Hub.
 * **`unit-and-integration-and-e2e-tests`** – Starts the Airflow stack, runs unit and DAG tests for changed DAGs, include files, or docker-compose.yaml, then tears down the stack.
@@ -366,7 +364,7 @@ Prometheus scrapes Airflow, with Grafana dashboards visualizing system health.
 
 While the current pipeline is functional and production-ready, several improvements can further enhance scalability, maintainability and governance.
 
-## Areas for Future Improvement
+### Areas for Future Improvement
 
 Several enhancements can further strengthen the platform:
 
