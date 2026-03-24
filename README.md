@@ -1,5 +1,24 @@
 # 📦 Supply Chain and Ecommerce Orderfulment Pipeline
 
+### Executive Summary
+
+This project implements an end-to-end data engineering pipeline designed to improve order fulfilment visibility, sales performance analysis, and supply chain efficiency in an e-commerce environment.
+
+By consolidating fragmented operational data (orders, shipments, deliveries, and customer activity) into a centralized cloud-based data platform, the solution enables:
+
+- Near real-time visibility into order lifecycle and delivery performance
+- Reliable, analytics-ready datasets through structured data modeling
+- Faster decision-making via OLAP queries and BI dashboards
+
+The platform transforms raw logistics data into a star-schema warehouse in Amazon Redshift, reducing reporting latency and enabling stakeholders to monitor key metrics such as:
+
+Order volume and revenue trends
+Profit margins and discount impact
+Delivery performance (late delivery rate: 1%)
+Product, customer, and regional performance
+
+The pipeline processes ~18K orders per batch with an average runtime of 5–10 minutes, while enabling sub-second analytical queries in Amazon Redshift.
+
 ## Problem Definition
 
 Supply Chain and Ecommerce operations generate large volumes of data from multiple systems, including orders, shipments, warehouse operations, delivery times and customer feedback.
@@ -15,8 +34,8 @@ However, this data is often fragmented, inconsistent and stored in different for
 Without an integrated data pipeline and structured analytical model, transforming raw logistics data into reliable, decision-ready insights is challenging.
 
 
-## Stakerholder Objectives
-* **Sales Performance:** onitor and improve overall sales across products and regions.
+## Stakeholder Objectives
+* **Sales Performance:** monitor and improve overall sales across products and regions.
 * **Profitability:** Analyze profit margins to maximize business profitability.
 * **Customer Insights:** Understand customer behavior to improve targeting and retention.
 * **Logistics Efficiency:** Reduce late deliveries and improve shipping performance.
@@ -37,12 +56,95 @@ The solution:
 
 The result is a scalable analytical system that improves visibility, performance monitoring, and strategic decision-making in e-commerce logistics.
 
+### Key Insights
 
+* Generated **$36.78M in sales** and **$3.97M profit** from **66K orders**, with an overall **11% profit margin**.
+* **Sales and profit remained stable from 2015–2017**, followed by a **sharp decline in 2018**, indicating potential operational or data issues.
+* **Sports and outdoor products** (e.g., tents, bikes, running shoes) are the **top revenue drivers**.
+* The **Consumer segment contributes the highest share of sales**, highlighting a strong **B2C focus**.
+* The supply chain is **highly efficient**, with a **late delivery rate of only 1%**.
+
+![Executive Dashboard](documentation/data/dashboard.png)
+
+### Operational and Business Outcomes
+
+* **Improved Supply Chain Visibility:**  
+  By centralizing fragmented logistics data into a unified Amazon Redshift warehouse, the pipeline enables end-to-end tracking of the order lifecycle (order → shipment → delivery), improving visibility across operations.
+
+* **Reduced Reporting Latency:**  
+  Transforming raw data into a structured star schema significantly reduces query time, enabling near real-time dashboard updates and faster decision-making.
+
+* **Enhanced Data Quality and Trust:**  
+  Standardized transformations in the Bronze–Silver–Gold pipeline reduce inconsistencies and missing data issues, increasing confidence in analytics outputs.
+
+* **Improved Logistics Performance Monitoring:**  
+  Aggregated delivery metrics (e.g., 1% late delivery rate) enable continuous monitoring of fulfilment SLAs and early detection of performance degradation.
+
+* **Profit Optimization Enablement:**  
+  Integrating sales and discount data into a single analytical model allows identification of margin erosion, supporting more effective pricing and discount strategies.
+
+* **Scalable Analytics Foundation:**  
+  The modular pipeline design (Airflow + S3 + Redshift) enables easy extension to additional data sources, supporting future growth and advanced analytics use cases.
+
+# Data Warehouse Overview
+
+The analytics layer is built using a **star schema** in Amazon Redshift, designed to support high-performance analytical queries.
+
+At the core is the `fact_sales` table, which captures both:
+- granular line-level transaction data
+- aggregated order and delivery performance metrics
+
+This is supported by conformed dimension tables:
+
+- `dim_customer`
+- `dim_product`
+- `dim_date`
+- `dim_order`
+- `dim_shipping`
+- `dim_delivery`
+
+### Analytical Coverage
+
+The schema enables multidimensional analysis across:
+
+- **Who:** customer segments and locations  
+- **What:** products and categories  
+- **When:** order, shipping, and delivery timelines  
+- **Where:** geographic performance  
+
+This design supports **sub-second query performance** for BI dashboards and ad-hoc analysis.
+
+![Supply Chain dashboard](documentation/data/star_schema.png)
+
+## ⚙️ System Performance & Scale
+
+- Processes ~18K orders and associated logistics records across historical datasets  
+- Average pipeline (Airflow DAG) runtime: ~5–10 minutes per batch load  
+- Data transformations handle multiple datasets across Bronze, Silver, and Gold layers with consistent schema enforcement  
+- Analytical queries in Amazon Redshift achieve **sub-second response times** for dashboard workloads  
+- Data is partitioned across Bronze–Silver–Gold layers to support scalable processing  
+
+### Data Quality & Reliability
+- Implemented schema validation and null handling during transformations  
+- Airflow retry mechanisms and logging ensure pipeline robustness  
+- CI/CD pipeline includes unit, integration and DAG-level tests  
+
+## Assumptions & Constraints
+
+### Assumptions
+- Data represents a single e-commerce platform
+- Pipeline operates on batch processing (no real-time streaming)
+- Source data schemas remain relatively stable
+- Delivery timestamps are accurate and complete
+
+### Constraints
+- No Change Data Capture (CDC) implemented
+- Limited handling of late-arriving data
+- No strict SLA guarantees for data freshness
+- Simplified supply chain model (no multi-warehouse complexity)
 
 # Architecture Diagram
 ![AWS architecture](documentation/data/architecture.png)
-
-
 
 # 🛠️ Tech Stack
 ![Apache Airflw](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
@@ -63,49 +165,6 @@ The result is a scalable analytical system that improves visibility, performance
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=style=flat\&logo=github-actions)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=style=flat\&logo=linux\&logoColor=black)
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=style=flat\&logo=power-bi\&logoColor=black)
-
-### Executive Summary
-
-The  **Supply Chain and Sales Performance dashboard** provides a clear, up-to-date view of the company’s sales, profit, orders and delivery performance. It helps teams track overall business performance while ensuring operations remain efficient as the business grows.
-
-At the same time, the dashboard highlights **top-performing products, key regions, and customer segments** that drive most of the revenue. It also reveals areas where **discounting and pricing strategies may be affecting profitability**.
-
-By showing where sales are strongest and where improvements are needed, the dashboard gives **operations, sales and management teams** the insights they need to make faster, data-driven decisions and improve overall business performance. 
-
-
-### Key Insights
-
-* Generated **$36.78M in sales** and **$3.97M profit** from **66K orders**, with an overall **11% profit margin**.
-* **Sales and profit remained stable from 2015–2017**, followed by a **sharp decline in 2018**, indicating potential operational or data issues.
-* **Sports and outdoor products** (e.g., tents, bikes, running shoes) are the **top revenue drivers**.
-* The **Consumer segment contributes the highest share of sales**, highlighting a strong **B2C focus**.
-* The supply chain is **highly efficient**, with a **late delivery rate of only 1%**.
-
-![Executive Dashboard](documentation/data/dashboard.png)
-
-### Operational and Business Outcomes
-
-* **Improved Supply Chain Visibility:** The dashboard provides a clear view of sales, profit, orders and delivery performance, enabling better operational monitoring.
-* **Better Decision-Making:** Identifies top-performing products, regions and customer segments to support data-driven business strategies.
-* **Profit Optimization Opportunities:** Analysis of discounts vs. profit highlights areas where pricing and discount strategies can be improved.
-* **Market Expansion Insights:** Regional sales analysis helps identify high-performing markets and underperforming regions with growth potential.
-* **Operational Efficiency Monitoring:** Delivery metrics, including a **1% late delivery rate**, help track logistics performance and maintain service quality.
-
-# Data Warehouse Overview
-The analytics schema in edshift employs a star-schema centered on one fact table that capture both granular line-level delivery performance and higher-level order-metrics and surrounded by four conformed dimensions (orders, customers, products and dates).
-
-This design lets you slice & dice daily service outcomes across the:
-
-* `who` (customer and city)
-* `what` (product and category)
-* `when` (order, agreed-delivery and actual-delivery dates)
-* `where` (customer geography)
-
-All in **sub-second, ad-hoc queries**.
-
-![Supply Chain dashboard](documentation/data/star_schema.png)
-
-
 
 # Technology Choices
 
@@ -138,8 +197,6 @@ This layered structure helps maintain:
 * clear separation between raw data and business-ready datasets.
 
 In addition, a **separate S3 bucket was created for testing and development purposes**, allowing experimentation and validation of ETL processes without affecting production data.
-
-
 
 # 2. Data Processing & ETL – Python, Pandas, PyArrow, Delta-rs
 
@@ -280,7 +337,10 @@ This ensures quick troubleshooting and reliable data processing.
 
 ## GitHub Actions
 
-Orchestrates the above steps, then stages scripts to S3 for Glue to pick up.
+* **`build-and-push-image`** – Builds a Docker image if the Dockerfile or requirements changed (or on manual trigger) and pushes it to Docker Hub.
+* **`unit-and-integration-and-e2e-tests`** – Starts the Airflow stack, runs unit and DAG tests for changed DAGs, include files, or docker-compose.yaml, then tears down the stack.
+
+
 
 ![github actions img](documentation/data/cicd.png)
 
