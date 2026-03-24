@@ -1,6 +1,6 @@
-# 📦 Supply Chain and Ecommerce Orderfulment Pipeline
+##  Supply Chain and Ecommerce Orderfulment Pipeline
 
-# Architecture Diagram
+### Architecture Diagram
 ![AWS architecture](documentation/data/architecture.png)
 
 ### Tech Stack
