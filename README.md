@@ -3,7 +3,7 @@
 # Architecture Diagram
 ![AWS architecture](documentation/data/architecture.png)
 
-# 🛠️ Tech Stack
+### Tech Stack
 ![Apache Airflw](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=style=flat\&logo=docker\&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=style=flat\&logo=python\&logoColor=white)
