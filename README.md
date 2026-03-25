@@ -1,7 +1,7 @@
 ##  Supply Chain and Ecommerce Orderfulment Pipeline
 
 ### Architecture Diagram
-![AWS architecture](documentation/data/architecture.png)
+![AWS architecture](documentation/data/architecture2.png)
 
 ### Tech Stack
 ![Apache Airflw](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=style=flat\&logo=apache-airflow\&logoColor=white)
